@@ -1,0 +1,27 @@
+---
+- name: Copy Zookeeper config
+  become: true
+  template:
+    src: zookeeper.properties.j2
+    dest: "{{ kafka_config_dir }}/zookeeper.properties"
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy Zookeeper Services
+  become: true
+  template:
+    src: "zookeeper.service.j2"
+    dest: "{{ systemd_dir }}/zookeeper.service"
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Enable and check Zookeeper service
+  become: true
+  systemd:
+    name: zookeeper
+    daemon_reload: yes
+    state: restarted
+    enabled: yes
+    force: true

@@ -1,0 +1,16 @@
+---
+- name: Installing Zookeeper
+  hosts: zookeeper
+  roles:
+    - java
+    - kafka
+    - zookeeper
+    - kafka-clean
+
+- name: Installing Brokers
+  hosts: brokers
+  roles:
+    - java
+    - kafka
+    - broker
+    - kafka-clean
